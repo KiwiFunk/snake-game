@@ -26,6 +26,9 @@ class Snake:
         body_new.pop()
         self.body = body_new
 
+    def grow(self):
+        self.body.append(self.body[-1])
+
 class Fruit:
     def __init__(self, cell_size, grid_size):
         #Vector2(x, y)
@@ -33,12 +36,18 @@ class Fruit:
         self.width = cell_size
         self.height = cell_size
     
-    def spawn_fruit(self):
+    def draw_fruit(self):
         """
         Create a rectangle object and draw it on the display surface
         """
         fruit_rect = pygame.Rect(self.pos.x * self.width, self.pos.y * self.height, self.width, self.height)
         pygame.draw.rect(screen, (150, 150, 100), fruit_rect)
+
+    def new_fruit(self, grid_size):
+        """
+        Move the fruit to a new randomized location within the grid
+        """
+        self.pos = Vector2(randrange(grid_size), randrange(grid_size))
 
 class MAIN:
     def __init__(self, cell_size, grid_size):
@@ -53,12 +62,14 @@ class MAIN:
         self.check_positions()
 
     def draw_elements(self):
-        self.fruit.spawn_fruit()
+        self.fruit.draw_fruit()
         self.snake.draw_snake()
 
     def check_positions(self):
         if self.fruit.pos == self.snake.body[0]:
             print("NOMF")
+            self.fruit.new_fruit(grid_size)
+            self.snake.grow()
 
 
 
