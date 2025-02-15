@@ -10,12 +10,23 @@ class Snake:
         self.width = cell_size
         self.height = cell_size
         self.body = [Vector2(5, 10), Vector2(6, 10), Vector2(7,10)]
-        self.direction = Vector2(1, 0)
+        self.direction = Vector2(-1, 0)
 
     def draw_snake(self):
         for e in self.body:
             e_rect = pygame.Rect(e.x * self.width, e.y * self.height, self.width, self.height)
             pygame.draw.rect(screen, (100, 100, 100), e_rect)
+
+    def change_direction(self, new_direction):
+        """
+        Perform logic checks to make sure inputs of the same axis are ignored before setting new direction
+
+        Parameters:
+        new_direction: Takes an input of Vector2(x, y)
+        """
+        #if the opposite of the new input does not equal the old one, set direction as new input
+        if new_direction.x * -1 != self.direction.x and new_direction.y * -1 != self.direction.y:
+            self.direction = new_direction
 
     def move_snake(self):
         #Create copy of body list, using slice : to make sure we have unique lists
@@ -118,13 +129,13 @@ while True:
         #Listen for WASD or arrows and set snake.direction accordingly
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP or event.key == pygame.K_w:
-                main_game.snake.direction = Vector2(0, -1)
+                main_game.snake.change_direction(Vector2(0, -1))
             elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                main_game.snake.direction = Vector2(0, 1)
+                main_game.snake.change_direction(Vector2(0, 1))
             elif event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                main_game.snake.direction = Vector2(-1, 0)
+                main_game.snake.change_direction(Vector2(-1, 0))
             elif event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                main_game.snake.direction = Vector2(1, 0)
+                main_game.snake.change_direction(Vector2(1, 0))
 
     #Takes RGB value as a tuple
     screen.fill((160, 200, 40))
