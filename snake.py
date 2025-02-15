@@ -50,10 +50,16 @@ class MAIN:
         Update the game loop
         """
         self.snake.move_snake()
+        self.check_positions()
 
     def draw_elements(self):
         self.fruit.spawn_fruit()
         self.snake.draw_snake()
+
+    def check_positions(self):
+        if self.fruit.pos == self.snake.body[0]:
+            print("NOMF")
+
 
 
 #init pygame modules
