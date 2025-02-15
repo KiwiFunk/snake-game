@@ -10,7 +10,7 @@ class Snake:
         self.width = cell_size
         self.height = cell_size
         self.body = [Vector2(5, 10), Vector2(6, 10), Vector2(7,10)]
-        self.direction = [Vector2(1, 0)]
+        self.direction = Vector2(1, 0)
 
     def draw_snake(self):
         for e in self.body:
@@ -18,10 +18,13 @@ class Snake:
             pygame.draw.rect(screen, (100, 100, 100), e_rect)
 
     def move_snake(self):
-        #slice list from start to one before last
-        body_new = self.body[:-1]
+        #Create copy of body list, using slice : to make sure we have unique lists
+        body_new = self.body[:]
+        #Add new head at position 0
         body_new.insert(0, body_new[0] + self.direction)
-        self.body = body_new[:]
+        #Remove the last segment and copy new list to body list
+        body_new.pop()
+        self.body = body_new
 
 class Fruit:
     def __init__(self, cell_size, grid_size):
@@ -53,6 +56,9 @@ clock = pygame.time.Clock()
 fruit = Fruit(cell_size, grid_size)
 snake = Snake(cell_size)
 
+SCREEN_UPDATE = pygame.USEREVENT
+pygame.time.set_timer(SCREEN_UPDATE, 200)
+
 #GAME LOOP START
 while True:
 
@@ -63,6 +69,19 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        
+        if event.type == SCREEN_UPDATE:
+            snake.move_snake()
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP or event.key == pygame.K_w:
+                snake.direction = Vector2(0, -1)
+            elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                snake.direction = Vector2(0, 1)
+            elif event.key == pygame.K_LEFT or event.key == pygame.K_a:
+                snake.direction = Vector2(-1, 0)
+            elif event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                snake.direction = Vector2(1, 0)
 
     #Takes RGB value as a tuple
     screen.fill((160, 200, 40))
