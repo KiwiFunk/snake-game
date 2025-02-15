@@ -5,9 +5,9 @@ from pygame.math import Vector2
 
 #CLASSES
 class Fruit:
-    def __init__(self, x_pos, y_pos, cell_size):
-        self.x_pos = x_pos
-        self.y_pos = y_pos
+    def __init__(self, cell_size, grid_size):
+        self.x_pos = random.randrange(grid_size + 1)
+        self.y_pos = random.randrange(grid_size + 1)
         self.pos = Vector2(self.x_pos, self.y_pos)
         self.cell_size = cell_size
         self.width = cell_size
@@ -19,20 +19,6 @@ class Fruit:
         """
         fruit_rect = pygame.Rect(self.pos.x * self.cell_size, self.pos.y * self.cell_size, self.width, self.height)
         pygame.draw.rect(screen, (150, 150, 100), fruit_rect)
-
-
-def get_random_position(max_grid):
-    """
-    Returns a tuple for (x, y) containing randomly genereated int values within the specified parameters
-
-    Parameters:
-    max_grid (int): Size of the game grid, function will not return a value OOB.
-    """
-    x = random.randrange(max_grid +1)
-    y = random.randrange(max_grid +1)
-    return x, y
-
-
 
 #init pygame modules
 pygame.init()
@@ -47,8 +33,7 @@ screen = pygame.display.set_mode((cell_size * grid_size, cell_size * grid_size))
 clock = pygame.time.Clock()
 
 #Create a fruit object
-fx, fy = get_random_position(grid_size)
-test_fruit = Fruit(fx, fy, cell_size)
+test_fruit = Fruit(cell_size, grid_size)
 
 #GAME LOOP START
 while True:
