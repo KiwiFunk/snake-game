@@ -71,7 +71,8 @@ class Fruit:
 class MAIN:
     def __init__(self, cell_size, grid_size):
         self.snake = Snake(cell_size)
-        self.fruit = Fruit(cell_size, grid_size)\
+        self.fruit = Fruit(cell_size, grid_size)
+        self.grid = grid_size
 
     def update(self):
         """
@@ -88,18 +89,24 @@ class MAIN:
     def check_positions(self):
         if self.fruit.pos == self.snake.body[0]:
             print("NOMF")
-            self.fruit.new_fruit(grid_size)
+            self.fruit.new_fruit(self.grid)
             self.snake.grow()
 
     def game_end_check(self):
         """
         Checks to see if snake is outside display surface, or has hit itself
         """
+        #If snake has collided with itself
         if self.snake.body[0] in self.snake.body[1:]:
+            self.game_over()
+        #Check if snake.body[0] falls in a range between 0 and the grid size for both axis
+        if not (0 <= self.snake.body[0].x < self.grid) or not (0 <= self.snake.body[0].y < self.grid):
             self.game_over()
 
     def game_over(self):
         print("Game Over")
+        pygame.quit()
+        sys.exit()
 
 
 
