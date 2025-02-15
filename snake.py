@@ -40,6 +40,22 @@ class Fruit:
         fruit_rect = pygame.Rect(self.pos.x * self.width, self.pos.y * self.height, self.width, self.height)
         pygame.draw.rect(screen, (150, 150, 100), fruit_rect)
 
+class MAIN:
+    def __init__(self, cell_size, grid_size):
+        self.snake = Snake(cell_size)
+        self.fruit = Fruit(cell_size, grid_size)
+
+    def update(self):
+        """
+        Update the game loop
+        """
+        self.snake.move_snake()
+
+    def draw_elements(self):
+        self.fruit.spawn_fruit()
+        self.snake.draw_snake()
+
+
 #init pygame modules
 pygame.init()
 
@@ -52,12 +68,11 @@ screen = pygame.display.set_mode((cell_size * grid_size, cell_size * grid_size))
 #Create clock object
 clock = pygame.time.Clock()
 
-#Create a fruit object
-fruit = Fruit(cell_size, grid_size)
-snake = Snake(cell_size)
+main_game = MAIN(cell_size, grid_size)
 
+#Controls how often the screen is updated. Use to increase snake speed in later levels?
 SCREEN_UPDATE = pygame.USEREVENT
-pygame.time.set_timer(SCREEN_UPDATE, 200)
+pygame.time.set_timer(SCREEN_UPDATE, 150)
 
 #GAME LOOP START
 while True:
@@ -71,26 +86,22 @@ while True:
             sys.exit()
         
         if event.type == SCREEN_UPDATE:
-            snake.move_snake()
-
+            main_game.update()
+        #Listen for WASD or arrows and set snake.direction accordingly
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP or event.key == pygame.K_w:
-                snake.direction = Vector2(0, -1)
+                main_game.snake.direction = Vector2(0, -1)
             elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                snake.direction = Vector2(0, 1)
+                main_game.snake.direction = Vector2(0, 1)
             elif event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                snake.direction = Vector2(-1, 0)
+                main_game.snake.direction = Vector2(-1, 0)
             elif event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                snake.direction = Vector2(1, 0)
+                main_game.snake.direction = Vector2(1, 0)
 
     #Takes RGB value as a tuple
     screen.fill((160, 200, 40))
     
-
-    fruit.spawn_fruit()
-    snake.draw_snake()
-
-
+    main_game.draw_elements()
 
     #Update game display
     pygame.display.update()
