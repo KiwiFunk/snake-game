@@ -10,7 +10,7 @@ class Snake:
         self.width = cell_size
         self.height = cell_size
         self.body = [Vector2(5, 10), Vector2(4, 10), Vector2(3,10)]
-        self.direction = Vector2(1, 0)
+        self.direction = Vector2(-1, 0)
         self.game_started = False
 
     def draw_snake(self):
@@ -26,10 +26,14 @@ class Snake:
         new_direction: Takes an input of Vector2(x, y)
         """
         #if the opposite of the new input does not equal the old one, set direction as new input
-        if new_direction.x * -1 != self.direction.x and new_direction.y * -1 != self.direction.y:
-            if not self.game_started:
+        if self.game_started:
+            if new_direction.x != self.direction.x and new_direction.y != self.direction.y:
+                self.direction = new_direction
+        else:
+            if new_direction.x != self.direction.x:
+                self.direction = new_direction
                 self.game_started = True
-            self.direction = new_direction
+            
 
     def move_snake(self):
         if self.game_started:
