@@ -10,11 +10,18 @@ class Snake:
         self.width = cell_size
         self.height = cell_size
         self.body = [Vector2(5, 10), Vector2(6, 10), Vector2(7,10)]
+        self.direction = [Vector2(1, 0)]
 
     def draw_snake(self):
         for e in self.body:
             e_rect = pygame.Rect(e.x * self.width, e.y * self.height, self.width, self.height)
             pygame.draw.rect(screen, (100, 100, 100), e_rect)
+
+    def move_snake(self):
+        #slice list from start to one before last
+        body_new = self.body[:-1]
+        body_new.insert(0, body_new[0] + self.direction)
+        self.body = body_new[:]
 
 class Fruit:
     def __init__(self, cell_size, grid_size):
