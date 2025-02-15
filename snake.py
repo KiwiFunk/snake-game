@@ -12,8 +12,10 @@ clock = pygame.time.Clock()
 
 
 placeholder_surface = pygame.Surface((100, 200))
+placeholder_surface.fill((102, 142, 7))
 
-
+x_pos = 250
+y_pos = 250
 #GAME LOOP START
 while True:
 
@@ -27,9 +29,11 @@ while True:
 
     #Takes RGB value as a tuple
     screen.fill((132, 192, 17))
+    
+    x_pos = (x_pos + 1) % 500
 
     #Add surfaces to display surface. Block Image Transfer (surface, (x, y))
-    screen.blit(placeholder_surface, (200, 250))
+    screen.blit(placeholder_surface, (x_pos, y_pos))
 
 
 
