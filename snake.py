@@ -1,15 +1,25 @@
 import pygame
 import sys
-import random
+from random import randrange
 from pygame.math import Vector2
 
 #CLASSES
+
+class Snake:
+    def __init__(self, cell_size):
+        self.width = cell_size
+        self.height = cell_size
+        self.body = [Vector2(5, 10), Vector2(6, 10), Vector2(7,10)]
+
+    def draw_snake(self):
+        for e in self.body:
+            e_rect = pygame.Rect(e.x * self.width, e.y * self.height, self.width, self.height)
+            pygame.draw.rect(screen, (100, 100, 100), e_rect)
+
 class Fruit:
     def __init__(self, cell_size, grid_size):
-        self.x_pos = random.randrange(grid_size + 1)
-        self.y_pos = random.randrange(grid_size + 1)
-        self.pos = Vector2(self.x_pos, self.y_pos)
-        self.cell_size = cell_size
+        #Vector2(x, y)
+        self.pos = Vector2(randrange(grid_size), randrange(grid_size))
         self.width = cell_size
         self.height = cell_size
     
@@ -17,7 +27,7 @@ class Fruit:
         """
         Create a rectangle object and draw it on the display surface
         """
-        fruit_rect = pygame.Rect(self.pos.x * self.cell_size, self.pos.y * self.cell_size, self.width, self.height)
+        fruit_rect = pygame.Rect(self.pos.x * self.width, self.pos.y * self.height, self.width, self.height)
         pygame.draw.rect(screen, (150, 150, 100), fruit_rect)
 
 #init pygame modules
@@ -33,7 +43,8 @@ screen = pygame.display.set_mode((cell_size * grid_size, cell_size * grid_size))
 clock = pygame.time.Clock()
 
 #Create a fruit object
-test_fruit = Fruit(cell_size, grid_size)
+fruit = Fruit(cell_size, grid_size)
+snake = Snake(cell_size)
 
 #GAME LOOP START
 while True:
@@ -50,7 +61,8 @@ while True:
     screen.fill((160, 200, 40))
     
 
-    test_fruit.spawn_fruit()
+    fruit.spawn_fruit()
+    snake.draw_snake()
 
 
 
