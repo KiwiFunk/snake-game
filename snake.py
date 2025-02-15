@@ -1,21 +1,42 @@
 import pygame
 import sys
+from pygame.math import Vector2
+
+#CLASSES
+class Fruit:
+    def __init__(self, x_pos, y_pos, cell_size):
+        self.x_pos = x_pos
+        self.y_pos = y_pos
+        self.pos = Vector2(self.x_pos, self.y_pos)
+        self.width = cell_size
+        self.height = cell_size
+    
+    def spawn_fruit(self):
+        """
+        Create a rectangle object and draw it on the display surface
+        """
+        fruit_rect = pygame.Rect(self.pos.x, self.pos.y, self.width, self.height)
+        pygame.draw.rect(screen, (150, 150, 100), fruit_rect)
+
+
+
+
 
 #init pygame modules
 pygame.init()
 
+cell_size = 40
+grid_size = 20
+
 #Create a display surface/Game window
-screen = pygame.display.set_mode((500, 500))
+screen = pygame.display.set_mode((cell_size * grid_size, cell_size * grid_size))
 
 #Create clock object
 clock = pygame.time.Clock()
 
+#Create a fruit object
+test_fruit = Fruit((cell_size * grid_size) / 2, (cell_size * grid_size) / 2, cell_size)
 
-placeholder_surface = pygame.Surface((100, 200))
-placeholder_surface.fill((102, 142, 7))
-
-x_pos = 250
-y_pos = 250
 #GAME LOOP START
 while True:
 
@@ -28,14 +49,10 @@ while True:
             sys.exit()
 
     #Takes RGB value as a tuple
-    screen.fill((132, 192, 17))
+    screen.fill((160, 200, 40))
     
-    x_pos = (x_pos + 1) % 500
 
-    #Add surfaces to display surface. Block Image Transfer (surface, (x, y))
-    screen.blit(placeholder_surface, (x_pos, y_pos))
-
-
+    test_fruit.spawn_fruit()
 
 
 
