@@ -9,6 +9,7 @@ class Fruit:
         self.x_pos = x_pos
         self.y_pos = y_pos
         self.pos = Vector2(self.x_pos, self.y_pos)
+        self.cell_size = cell_size
         self.width = cell_size
         self.height = cell_size
     
@@ -16,19 +17,20 @@ class Fruit:
         """
         Create a rectangle object and draw it on the display surface
         """
-        fruit_rect = pygame.Rect(self.pos.x, self.pos.y, self.width, self.height)
+        fruit_rect = pygame.Rect(self.pos.x * self.cell_size, self.pos.y * self.cell_size, self.width, self.height)
         pygame.draw.rect(screen, (150, 150, 100), fruit_rect)
 
 
-def get_random_position(cell_size, max_grid):
+def get_random_position(max_grid):
     """
-    Returns a random int within the specified parameters
+    Returns a tuple for (x, y) containing randomly genereated int values within the specified parameters
 
     Parameters:
-    cell_size (int): Size of the grid cells for calculating X/Y pos.
     max_grid (int): Size of the game grid, function will not return a value OOB.
     """
-    return random.randrange(max_grid +1) * cell_size
+    x = random.randrange(max_grid +1)
+    y = random.randrange(max_grid +1)
+    return x, y
 
 
 
@@ -45,7 +47,8 @@ screen = pygame.display.set_mode((cell_size * grid_size, cell_size * grid_size))
 clock = pygame.time.Clock()
 
 #Create a fruit object
-test_fruit = Fruit(get_random_position(cell_size, grid_size), get_random_position(cell_size, grid_size), cell_size)
+fx, fy = get_random_position(grid_size)
+test_fruit = Fruit(fx, fy, cell_size)
 
 #GAME LOOP START
 while True:
