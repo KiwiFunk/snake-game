@@ -9,8 +9,9 @@ class Snake:
     def __init__(self, cell_size):
         self.width = cell_size
         self.height = cell_size
-        self.body = [Vector2(5, 10), Vector2(6, 10), Vector2(7,10)]
-        self.direction = Vector2(-1, 0)
+        self.body = [Vector2(5, 10), Vector2(4, 10), Vector2(3,10)]
+        self.direction = Vector2(1, 0)
+        self.game_started = False
 
     def draw_snake(self):
         for e in self.body:
@@ -26,16 +27,19 @@ class Snake:
         """
         #if the opposite of the new input does not equal the old one, set direction as new input
         if new_direction.x * -1 != self.direction.x and new_direction.y * -1 != self.direction.y:
+            if not self.game_started:
+                self.game_started = True
             self.direction = new_direction
 
     def move_snake(self):
-        #Create copy of body list, using slice : to make sure we have unique lists
-        body_new = self.body[:]
-        #Add new head at position 0
-        body_new.insert(0, body_new[0] + self.direction)
-        #Remove the last segment and copy new list to body list
-        body_new.pop()
-        self.body = body_new
+        if self.game_started:
+            #Create copy of body list, using slice : to make sure we have unique lists
+            body_new = self.body[:]
+            #Add new head at position 0
+            body_new.insert(0, body_new[0] + self.direction)
+            #Remove the last segment and copy new list to body list
+            body_new.pop()
+            self.body = body_new
 
     def grow(self):
         self.body.append(self.body[-1])
@@ -63,7 +67,7 @@ class Fruit:
 class MAIN:
     def __init__(self, cell_size, grid_size):
         self.snake = Snake(cell_size)
-        self.fruit = Fruit(cell_size, grid_size)
+        self.fruit = Fruit(cell_size, grid_size)\
 
     def update(self):
         """
