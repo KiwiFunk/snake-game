@@ -60,6 +60,7 @@ class MAIN:
         """
         self.snake.move_snake()
         self.check_positions()
+        self.game_end_check()
 
     def draw_elements(self):
         self.fruit.draw_fruit()
@@ -70,6 +71,16 @@ class MAIN:
             print("NOMF")
             self.fruit.new_fruit(grid_size)
             self.snake.grow()
+
+    def game_end_check(self):
+        """
+        Checks to see if snake is outside display surface, or has hit itself
+        """
+        if self.snake.body[0] in self.snake.body[1:]:
+            self.game_over()
+
+    def game_over(self):
+        print("Game Over")
 
 
 
