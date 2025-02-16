@@ -42,7 +42,6 @@ class Snake:
         self.update_head_sprite()
         self.update_tail_sprite()
 
-
         #i = index e = element
         for i, e in enumerate(self.body):
             #Create a rect object for positioning
@@ -63,7 +62,7 @@ class Snake:
                 if prev_element.x == next_element.x:
                     screen.blit(self.body_vertical, e_rect)
                 elif prev_element.y == next_element.y:
-                    screen.blit(self.body_horizontawl, e_rect)
+                    screen.blit(self.body_horizontal, e_rect)
                 else:
                     if (prev_element.x == -1 and next_element.y == -1) or (prev_element.y == -1 and next_element.x == -1):
                         screen.blit(self.body_ur, e_rect)
@@ -74,9 +73,6 @@ class Snake:
                     elif (prev_element.x == 1 and next_element.y == 1) or (prev_element.y == 1 and next_element.x == 1):
                         screen.blit(self.body_br, e_rect)
 
-
-
-                
     def update_head_sprite(self):
         """
         Create a new vector based on the relationship between the head, and the first element after.
@@ -98,10 +94,6 @@ class Snake:
         elif tail_rel == Vector2(1, 0): self.tail = self.tail_right
         elif tail_rel == Vector2(0, -1): self.tail = self.tail_up
         elif tail_rel == Vector2(0, 1): self.tail = self.tail_down
-
-
-            
-            
 
     def change_direction(self, new_direction):
         """
@@ -160,6 +152,7 @@ class MAIN:
         self.snake = Snake(cell_size)
         self.fruit = Fruit(cell_size)
         self.grid = grid_size
+        self.cell = cell_size
 
     def update(self):
         """
@@ -170,6 +163,7 @@ class MAIN:
         self.game_end_check()
 
     def draw_elements(self):
+        self.draw_grass()
         self.fruit.draw_fruit()
         self.snake.draw_snake()
 
@@ -194,6 +188,22 @@ class MAIN:
         print("Game Over")
         pygame.quit()
         sys.exit()
+    
+    def draw_grass(self):
+        grass_color = (170, 215, 81)
+        grass_dark = (160, 208, 72)
+
+        for row in range(self.grid):
+            for col in range(self.grid):
+                if col % 2 == 0 and row % 2 == 0:
+                    grass_rect = pygame.Rect(col * self.cell, row * self.cell, self.cell, self.cell)
+                    pygame.draw.rect(screen, grass_color, grass_rect)
+                elif col % 2 == 1 and row % 2 == 1:
+                    grass_rect = pygame.Rect(col * self.cell, row * self.cell, self.cell, self.cell)
+                    pygame.draw.rect(screen, grass_color, grass_rect)
+                else: 
+                    grass_rect = pygame.Rect(col * self.cell, row * self.cell, self.cell, self.cell)
+                    pygame.draw.rect(screen, grass_dark, grass_rect)
 
 
 #init pygame modules
@@ -238,8 +248,8 @@ while True:
             elif event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                 main_game.snake.change_direction(Vector2(1, 0))
 
-    #Takes RGB value as a tuple
-    screen.fill((160, 200, 40))
+    #Takes RGB value as a tuple. OLD FILL, DEPRECIATED
+    screen.fill((160, 100, 140))
     
     main_game.draw_elements()
 
