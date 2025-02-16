@@ -31,7 +31,7 @@ class Snake:
         self.body_bl = pygame.image.load('assets/snake/BendLeft.png').convert_alpha()
         self.body_bl = pygame.transform.smoothscale(self.body_bl, (self.width, self.height))
         self.body_br = pygame.image.load('assets/snake/BendRight.png').convert_alpha()
-        self.body_br = pygame.transform.scale(self.body_br, (self.width, self.height))
+        self.body_br = pygame.transform.smoothscale(self.body_br, (self.width, self.height))
 
         self.body_ul = pygame.transform.rotate(self.body_bl, 180)
         self.body_ur = pygame.transform.rotate(self.body_br, 180)
@@ -63,7 +63,16 @@ class Snake:
                 if prev_element.x == next_element.x:
                     screen.blit(self.body_vertical, e_rect)
                 elif prev_element.y == next_element.y:
-                    screen.blit(self.body_horizontal, e_rect)
+                    screen.blit(self.body_horizontawl, e_rect)
+                else:
+                    if (prev_element.x == -1 and next_element.y == -1) or (prev_element.y == -1 and next_element.x == -1):
+                        screen.blit(self.body_ur, e_rect)
+                    elif (prev_element.x == 1 and next_element.y == -1) or (prev_element.y == -1 and next_element.x == 1):
+                        screen.blit(self.body_ul, e_rect)
+                    elif (prev_element.x == -1 and next_element.y == 1) or (prev_element.y == 1 and next_element.x == -1):
+                        screen.blit(self.body_bl, e_rect)
+                    elif (prev_element.x == 1 and next_element.y == 1) or (prev_element.y == 1 and next_element.x == 1):
+                        screen.blit(self.body_br, e_rect)
 
 
 
