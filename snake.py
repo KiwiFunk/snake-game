@@ -191,6 +191,11 @@ class MAIN:
             self.fruit.new_fruit(self.grid)
             self.snake.grow()
 
+        #If fruit has spawned inside snake, reroll
+        for e in self.snake.body[1:]:
+            if e == self.fruit.pos:
+                self.fruit.new_fruit(self.grid)
+
     def game_end_check(self):
         """
         Checks to see if snake is outside display surface, or has hit itself
