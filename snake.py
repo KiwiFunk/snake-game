@@ -153,6 +153,7 @@ class MAIN:
         self.fruit = Fruit(cell_size)
         self.grid = grid_size
         self.cell = cell_size
+        self.heading_font = pygame.font.Font('assets/fonts/sprint-2.ttf', 30)
 
     def update(self):
         """
@@ -166,6 +167,7 @@ class MAIN:
         self.draw_grass()
         self.fruit.draw_fruit()
         self.snake.draw_snake()
+        self.draw_score()
 
     def check_positions(self):
         if self.fruit.pos == self.snake.body[0]:
@@ -201,6 +203,23 @@ class MAIN:
                 else:
                     pygame.draw.rect(screen, grass_dark, grass_rect)
 
+    def draw_score(self):
+        score_text = str((len(self.snake.body) - 3) * 10)
+        score_surface = self.heading_font.render(score_text, True, (255,255,255))
+        score_xy = ((self.grid * self.cell / 2), self.grid)
+
+        # Create a black outline
+        outline_surface = self.heading_font.render(score_text, True, (0, 0, 0))
+        outline_rect = outline_surface.get_rect(center = score_xy)
+
+        # Blit the outline first
+        for offset in [(2, 2), (2, -2), (-2, 2), (-2, -2)]:
+            screen.blit(outline_surface, outline_rect.move(offset))
+
+        # Blit the main score text
+        score_rect = score_surface.get_rect(center = score_xy)
+        screen.blit(score_surface, score_rect)
+
 
 #init pygame modules
 pygame.init()
@@ -215,9 +234,6 @@ screen = pygame.display.set_mode((cell_size * grid_size, cell_size * grid_size))
 clock = pygame.time.Clock()
 
 main_game = MAIN(cell_size, grid_size)
-
-#Fontes (font, font size)
-game_font = pygame.font.Font('assets/fonts/sprint-2.ttf', 30)
 
 #Controls how often the screen is updated. Use to increase snake speed in later levels?
 SCREEN_UPDATE = pygame.USEREVENT
