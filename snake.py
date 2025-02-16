@@ -36,6 +36,13 @@ class Snake:
         self.body_ul = pygame.transform.rotate(self.body_bl, 180)
         self.body_ur = pygame.transform.rotate(self.body_br, 180)
 
+        #Sounds
+        self.leftkey_sound = pygame.mixer.Sound('assets/sounds/key1.wav')
+        self.rightkey_sound = pygame.mixer.Sound('assets/sounds/key2.wav')
+        self.upkey_sound = pygame.mixer.Sound('assets/sounds/key3.wav')
+        self.downkey_sound = pygame.mixer.Sound('assets/sounds/key4.wav')
+        self.eat_sound = pygame.mixer.Sound('assets/sounds/Eat.wav')
+
     def draw_snake(self):
         """
         """
