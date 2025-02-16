@@ -11,6 +11,26 @@ class Snake:
         self.direction = Vector2(-1, 0)
         self.game_started = False
 
+        #Init sprites
+        self.head_up = pygame.image.load('assets/snake/Head.png').convert_alpha()
+        self.head_down = pygame.transform.rotate(self.head_up, 180)
+        self.head_right = pygame.transform.rotate(self.head_up, -90)
+        self.head_left = pygame.transform.rotate(self.head_up, 90)
+
+        self.body_vertical = pygame.image.load('assets/snake/Body.png').convert_alpha()
+        self.body_horizontal = pygame.transform.rotate(self.body_vertical, 90)
+
+        self.tail_up = pygame.image.load('assets/snake/Tail.png').convert_alpha()
+        self.tail_down = pygame.transform.rotate(self.tail_up, 180)
+        self.tail_right = pygame.transform.rotate(self.tail_up, -90)
+        self.tail_left = pygame.transform.rotate(self.tail_up, 90)
+
+        self.body_bl = pygame.image.load('assets/snake/BendLeft.png').convert_alpha()
+        self.body_br = pygame.image.load('assets/snake/BendRight.png').convert_alpha()
+
+        self.body_ul = pygame.transform.rotate(self.body_bl, 180)
+        self.body_ur = pygame.transform.rotate(self.body_br, 180)
+
     def draw_snake(self):
         for e in self.body:
             e_rect = pygame.Rect(e.x * self.width, e.y * self.height, self.width, self.height)
@@ -51,13 +71,16 @@ class Fruit:
         self.pos = Vector2(15, 10)
         self.width = cell_size
         self.height = cell_size
+        self.sprite = pygame.image.load('assets/fruits/watermelon.png').convert_alpha()
+        self.sprite_scaled = pygame.transform.scale(self.sprite, (self.width, self.height))
     
     def draw_fruit(self):
         """
         Create a rectangle object and draw it on the display surface
         """
         fruit_rect = pygame.Rect(self.pos.x * self.width, self.pos.y * self.height, self.width, self.height)
-        pygame.draw.rect(screen, (150, 150, 100), fruit_rect)
+        screen.blit(self.sprite_scaled, fruit_rect)
+        #pygame.draw.rect(screen, (150, 150, 100), fruit_rect)
 
     def new_fruit(self, grid_size):
         """
