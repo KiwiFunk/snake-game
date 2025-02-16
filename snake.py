@@ -1,10 +1,8 @@
-import pygame
-import sys
+import pygame, sys
 from random import randrange
 from pygame.math import Vector2
 
 #CLASSES
-
 class Snake:
     def __init__(self, cell_size):
         self.width = cell_size
@@ -34,7 +32,6 @@ class Snake:
                 self.direction = new_direction
                 self.game_started = True
             
-
     def move_snake(self):
         if self.game_started:
             #Create copy of body list, using slice : to make sure we have unique lists
@@ -49,9 +46,9 @@ class Snake:
         self.body.append(self.body[-1])
 
 class Fruit:
-    def __init__(self, cell_size, grid_size):
+    def __init__(self, cell_size):
         #Vector2(x, y)
-        self.pos = Vector2(randrange(grid_size), randrange(grid_size))
+        self.pos = Vector2(15, 10)
         self.width = cell_size
         self.height = cell_size
     
@@ -71,7 +68,7 @@ class Fruit:
 class MAIN:
     def __init__(self, cell_size, grid_size):
         self.snake = Snake(cell_size)
-        self.fruit = Fruit(cell_size, grid_size)
+        self.fruit = Fruit(cell_size)
         self.grid = grid_size
 
     def update(self):
@@ -107,7 +104,6 @@ class MAIN:
         print("Game Over")
         pygame.quit()
         sys.exit()
-
 
 
 #init pygame modules
