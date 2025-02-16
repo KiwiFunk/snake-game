@@ -13,28 +13,62 @@ class Snake:
 
         #Init sprites
         self.head_up = pygame.image.load('assets/snake/Head.png').convert_alpha()
+        self.head_up = pygame.transform.scale(self.head_up, (self.width, self.height))
         self.head_down = pygame.transform.rotate(self.head_up, 180)
         self.head_right = pygame.transform.rotate(self.head_up, -90)
         self.head_left = pygame.transform.rotate(self.head_up, 90)
 
         self.body_vertical = pygame.image.load('assets/snake/Body.png').convert_alpha()
+        self.body_vertical = pygame.transform.scale(self.body_vertical, (self.width, self.height))
         self.body_horizontal = pygame.transform.rotate(self.body_vertical, 90)
 
         self.tail_up = pygame.image.load('assets/snake/Tail.png').convert_alpha()
+        self.tail_up = pygame.transform.scale(self.tail_up, (self.width, self.height))
         self.tail_down = pygame.transform.rotate(self.tail_up, 180)
         self.tail_right = pygame.transform.rotate(self.tail_up, -90)
         self.tail_left = pygame.transform.rotate(self.tail_up, 90)
 
         self.body_bl = pygame.image.load('assets/snake/BendLeft.png').convert_alpha()
+        self.body_bl = pygame.transform.scale(self.body_bl, (self.width, self.height))
         self.body_br = pygame.image.load('assets/snake/BendRight.png').convert_alpha()
+        self.body_br = pygame.transform.scale(self.body_br, (self.width, self.height))
 
         self.body_ul = pygame.transform.rotate(self.body_bl, 180)
         self.body_ur = pygame.transform.rotate(self.body_br, 180)
 
     def draw_snake(self):
-        for e in self.body:
+        """
+        """
+        self.update_head_sprite()
+
+
+        #i = index e = element
+        for i, e in enumerate(self.body):
+            #Create a rect object for positioning
             e_rect = pygame.Rect(e.x * self.width, e.y * self.height, self.width, self.height)
-            pygame.draw.rect(screen, (100, 100, 100), e_rect)
+            #pygame.draw.rect(screen, (100, 100, 100), e_rect)
+
+            #Calculate direction snake is heading
+            if i == 0:
+                screen.blit(self.head, e_rect)
+            else:
+                pygame.draw.rect(screen, (100, 100, 100), e_rect)
+                
+    def update_head_sprite(self):
+        """
+        Create a new vector based on the relationship between the head, and the first element after.
+        Use to calculate direction and assign approriate sprite
+        """
+        head_rel = self.body[1] - self.body[0]
+        if head_rel == Vector2(1, 0): self.head = self.head_left
+        elif head_rel == Vector2(-1, 0): self.head = self.head_right
+        elif head_rel == Vector2(0, 1): self.head = self.head_up
+        elif head_rel == Vector2(0, -1): self.head = self.head_down
+
+
+
+            
+            
 
     def change_direction(self, new_direction):
         """
