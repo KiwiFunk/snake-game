@@ -102,20 +102,24 @@ class Snake:
         elif tail_rel == Vector2(0, -1): self.tail = self.tail_up
         elif tail_rel == Vector2(0, 1): self.tail = self.tail_down
 
-    def change_direction(self, new_direction):
+    def change_direction(self, new_direction, audio_file):
         """
         Perform logic checks to make sure inputs of the same axis are ignored before setting new direction
 
         Parameters:
         new_direction: Takes an input of Vector2(x, y)
+        audio_file: Takes a string of the correct audio to play
         """
         #if the opposite of the new input does not equal the old one, set direction as new input
         if self.game_started:
             if new_direction.x != self.direction.x and new_direction.y != self.direction.y:
                 self.direction = new_direction
+                #play the specified audio
+                getattr(self, audio_file).play()
         else:
             if new_direction.x != self.direction.x:
                 self.direction = new_direction
+                getattr(self, audio_file).play()
                 self.game_started = True
             
     def move_snake(self):
@@ -132,7 +136,7 @@ class Snake:
         self.body.append(self.body[-1])
 
     def eat_fruit_audio(self):
-        self.eat_sound.set_volume(0.4)
+        self.eat_sound.set_volume(0.2)
         self.eat_sound.play()
 
 class Fruit:
@@ -268,13 +272,13 @@ while True:
         #Listen for WASD or arrows and set snake.direction accordingly
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP or event.key == pygame.K_w:
-                main_game.snake.change_direction(Vector2(0, -1))
+                main_game.snake.change_direction(Vector2(0, -1), 'upkey_sound')
             elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                main_game.snake.change_direction(Vector2(0, 1))
+                main_game.snake.change_direction(Vector2(0, 1), 'downkey_sound')
             elif event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                main_game.snake.change_direction(Vector2(-1, 0))
+                main_game.snake.change_direction(Vector2(-1, 0), 'leftkey_sound')
             elif event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                main_game.snake.change_direction(Vector2(1, 0))
+                main_game.snake.change_direction(Vector2(1, 0), 'rightkey_sound')
 
     #Takes RGB value as a tuple. OLD FILL, DEPRECIATED
     screen.fill((160, 100, 140))
