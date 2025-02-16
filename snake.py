@@ -195,14 +195,10 @@ class MAIN:
 
         for row in range(self.grid):
             for col in range(self.grid):
-                if col % 2 == 0 and row % 2 == 0:
-                    grass_rect = pygame.Rect(col * self.cell, row * self.cell, self.cell, self.cell)
+                grass_rect = pygame.Rect(col * self.cell, row * self.cell, self.cell, self.cell)
+                if (row + col) % 2 == 0:
                     pygame.draw.rect(screen, grass_color, grass_rect)
-                elif col % 2 == 1 and row % 2 == 1:
-                    grass_rect = pygame.Rect(col * self.cell, row * self.cell, self.cell, self.cell)
-                    pygame.draw.rect(screen, grass_color, grass_rect)
-                else: 
-                    grass_rect = pygame.Rect(col * self.cell, row * self.cell, self.cell, self.cell)
+                else:
                     pygame.draw.rect(screen, grass_dark, grass_rect)
 
 
