@@ -131,6 +131,10 @@ class Snake:
     def grow(self):
         self.body.append(self.body[-1])
 
+    def eat_fruit_audio(self):
+        self.eat_sound.set_volume(0.4)
+        self.eat_sound.play()
+
 class Fruit:
     def __init__(self, cell_size):
         #Vector2(x, y)
@@ -179,6 +183,7 @@ class MAIN:
     def check_positions(self):
         if self.fruit.pos == self.snake.body[0]:
             print("NOMF")
+            self.snake.eat_fruit_audio()
             self.fruit.new_fruit(self.grid)
             self.snake.grow()
 
@@ -229,6 +234,7 @@ class MAIN:
 
 
 #init pygame modules
+pygame.mixer.pre_init(44100, -16, 2, 512)
 pygame.init()
 
 cell_size = 40
