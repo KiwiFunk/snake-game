@@ -133,7 +133,15 @@ class Snake:
             self.body = body_new
 
     def grow(self):
-        self.body.append(self.body[-1])
+        """
+        Add new segment based on the direction between last two segments
+        """
+        tail = self.body[-1]
+        #Calculate the direction vector using the second from last element in relation to the tail
+        direction = self.body[-1] - self.body[-2]
+        
+        new_segment = Vector2(tail.x + direction.x, tail.y + direction.y)
+        self.body.append(new_segment)
 
     def eat_fruit_audio(self):
         self.eat_sound.set_volume(0.2)
@@ -157,7 +165,7 @@ class Fruit:
         """
         fruit_rect = pygame.Rect(self.pos.x * self.width, self.pos.y * self.height, self.width, self.height)
         screen.blit(self.sprite_scaled, fruit_rect)
-        #pygame.draw.rect(screen, (150, 150, 100), fruit_rect)
+        
 
     def new_fruit(self, grid_size):
         """
