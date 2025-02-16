@@ -57,7 +57,16 @@ class Snake:
                 screen.blit(self.tail, e_rect)
 
             else:
-                pygame.draw.rect(screen, (100, 100, 100), e_rect)
+                prev_element = self.body[i + 1] - e
+                next_element = self.body[i - 1] - e
+
+                if prev_element.x == next_element.x:
+                    screen.blit(self.body_vertical, e_rect)
+                elif prev_element.y == next_element.y:
+                    screen.blit(self.body_horizontal, e_rect)
+
+
+
                 
     def update_head_sprite(self):
         """
@@ -72,7 +81,7 @@ class Snake:
 
     def update_tail_sprite(self):
         """
-        Create a new vector based on the relationship between the head, and the first element after.
+        Create a new vector based on the relationship between the tail, and the first element before.
         Use to calculate direction and assign approriate sprite
         """
         tail_rel = self.body[-2] - self.body[-1]
