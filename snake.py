@@ -139,6 +139,9 @@ class Snake:
         self.eat_sound.set_volume(0.2)
         self.eat_sound.play()
 
+    def reset(self):
+        self.body = [Vector2(5, 10), Vector2(4, 10), Vector2(3,10)]
+
 class Fruit:
     def __init__(self, cell_size):
         #Vector2(x, y)
@@ -209,8 +212,9 @@ class MAIN:
 
     def game_over(self):
         print("Game Over")
-        pygame.quit()
-        sys.exit()
+        self.snake.reset()
+        #pygame.quit()
+        #sys.exit()
     
     def draw_grass(self):
         grass_color = (170, 215, 81)
@@ -227,7 +231,7 @@ class MAIN:
     def draw_score(self):
         score_text = str((len(self.snake.body) - 3) * 10)
         score_surface = self.heading_font.render(score_text, True, (255,255,255))
-        score_xy = ((self.grid * self.cell / 2), self.grid)
+        score_xy = ((self.grid * self.cell / 2), 30)
 
         # Create a black outline
         outline_surface = self.heading_font.render(score_text, True, (0, 0, 0))
