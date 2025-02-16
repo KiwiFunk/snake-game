@@ -7,7 +7,7 @@ class Snake:
     def __init__(self, cell_size):
         self.width = cell_size
         self.height = cell_size
-        self.body = [Vector2(5, 10), Vector2(4, 10), Vector2(3,10)]
+        self.body = [Vector2(4, 8), Vector2(3, 8), Vector2(2,8)]
         self.direction = Vector2(-1, 0)
         self.game_started = False
 
@@ -153,7 +153,7 @@ class Snake:
 class Fruit:
     def __init__(self, cell_size):
         #Vector2(x, y)
-        self.pos = Vector2(15, 10)
+        self.pos = Vector2(14, 8)
         self.width = cell_size
         self.height = cell_size
         self.sprite = pygame.image.load('assets/fruits/watermelon.png').convert_alpha()
@@ -258,8 +258,8 @@ class MAIN:
 pygame.mixer.pre_init(44100, -16, 2, 512)
 pygame.init()
 
-cell_size = 40
-grid_size = 20
+cell_size = 60
+grid_size = 17
 
 #Create a display surface/Game window
 screen = pygame.display.set_mode((cell_size * grid_size, cell_size * grid_size))
