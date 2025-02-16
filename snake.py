@@ -216,6 +216,9 @@ clock = pygame.time.Clock()
 
 main_game = MAIN(cell_size, grid_size)
 
+#Fontes (font, font size)
+game_font = pygame.font.Font('assets/fonts/sprint-2.ttf', 30)
+
 #Controls how often the screen is updated. Use to increase snake speed in later levels?
 SCREEN_UPDATE = pygame.USEREVENT
 pygame.time.set_timer(SCREEN_UPDATE, 150)
