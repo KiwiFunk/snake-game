@@ -154,6 +154,7 @@ class Snake:
 
 class Fruit:
     def __init__(self, cell_size):
+
         self.cell_size = cell_size
         self.pos = Vector2(14, 8)
         
@@ -161,12 +162,12 @@ class Fruit:
         self.sprites = self._load_sprites()
         self.current_sprite = self.sprites[0]
         self.sprite = self.current_sprite
-        
+
         # Animation settings
-        self.animation_speed = 0.5
-        self.scale_range = 12
-        self.growth = 0
-        self.growing = True
+        self.time = 0
+        self.animation_speed = 0.025  # Lower = slower oscillation
+        self.max_scale_change = 10       # Maximum pixels to grow/shrink
+        self.midpoint_size = self.cell_size
         
         # Set up initial rect
         self.rect = self.sprite.get_rect()
@@ -190,29 +191,22 @@ class Fruit:
             for file in sprite_files
         ]
 
-    def update(self):
-        """Update fruit animation and position"""
-        # Update growth direction
-        if self.growth >= self.scale_range:
-            self.growing = False
-        elif self.growth <= 0:
-            self.growing = True
-            
-        # Update size
-        self.growth += self.animation_speed if self.growing else - self.animation_speed
+    def scale_anim(self):
+        """Update fruit animation using sine wave"""
+        self.time += 1
         
-        # Calculate new sprite size with animation
-        size_delta = round(self.growth)
-        new_size = self.cell_size + size_delta
+        new_size = self.max_scale_change * math.sin(self.animation_speed * self.time * math.pi) + self.midpoint_size
         
-        # Scale current sprite
+        # Scale sprite
         self.sprite = pygame.transform.smoothscale(
             self.current_sprite,
-            (new_size, new_size)
+            (int(new_size), int(new_size))
         )
         
-        # Update rect while maintaining center position
-        self.rect = self.sprite.get_rect(center=self.rect.center)
+        # Keep fruit centered during animation
+        old_center = self.rect.center
+        self.rect = self.sprite.get_rect()
+        self.rect.center = old_center
 
     def draw_fruit(self):
         """Draw the fruit at its grid position"""
@@ -222,6 +216,7 @@ class Fruit:
         """Move fruit to new random position and change sprite"""
         self.pos = Vector2(randrange(grid_size), randrange(grid_size))
         self.current_sprite = self.sprites[randrange(len(self.sprites))]
+        self.sprite = self.current_sprite
         
         # Update rect position for new grid position
         self.rect.center = (
@@ -248,9 +243,9 @@ class MAIN:
     def draw_elements(self):
         self.draw_grass()
         self.fruit.draw_fruit()
-        self.fruit.update()
         self.snake.draw_snake()
         self.draw_score()
+        self.fruit.scale_anim()
 
     def check_positions(self):
         if self.fruit.pos == self.snake.body[0]:
