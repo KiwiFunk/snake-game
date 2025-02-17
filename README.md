@@ -1,4 +1,4 @@
-### SNAKE
+# SNAKE
 A recreation of Google's snake game written in Python using pygame. I created this using a wonderful tutorial by Clear Code to teach me the basics of pygame and help me through creating the basic game loop, before starting to extend the features using my own ideas.
 
 So far I have added on and reworked the fruits class to allow multiple randomly selected sprites for some variation, as well as a simple scaling animation to make them feel more dynamic. As a challenge I am trying to implement most of the features the Google example has.
@@ -23,7 +23,7 @@ All the featured assets were made by me! Assets were based off those featured in
 
 ## Really Useful Resources
 
-[Learning pygame by creating Snake by Clear Code](https://www.youtube.com/watch?v=QFvqStqPCRU&list=LL&index=6)
+[Learning pygame by creating Snake - Clear Code](https://www.youtube.com/watch?v=QFvqStqPCRU&list=LL&index=6)
 
 A really awesome introduction into PyGame by a channel called Clear Code that waks you through all the basic steps for creating the snake game in PyGame with only a basic understanding of the Python language required
 
