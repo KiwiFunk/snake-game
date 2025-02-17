@@ -1,6 +1,8 @@
 import pygame, sys
 from random import randrange
 from pygame.math import Vector2
+import pygame.gfxdraw
+import math
 
 #CLASSES
 class Snake:
@@ -156,16 +158,15 @@ class Fruit:
         self.pos = Vector2(14, 8)
         self.width = cell_size
         self.height = cell_size
-        self.sprite = pygame.image.load('assets/fruits/watermelon.png').convert_alpha()
-        self.sprite_scaled = pygame.transform.smoothscale(self.sprite, (self.width, self.height))
-    
+        self.watermelon = pygame.transform.smoothscale(pygame.image.load('assets/fruits/watermelon.png').convert_alpha(), (self.width, self.height))
+        self.sprite = [self.watermelon]
+
     def draw_fruit(self):
         """
         Create a rectangle object and draw it on the display surface
         """
         fruit_rect = pygame.Rect(self.pos.x * self.width, self.pos.y * self.height, self.width, self.height)
-        screen.blit(self.sprite_scaled, fruit_rect)
-        
+        screen.blit(self.sprite[randrange(len(self.sprite))], fruit_rect)
 
     def new_fruit(self, grid_size):
         """
