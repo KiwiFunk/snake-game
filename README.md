@@ -22,6 +22,7 @@ All the featured assets were made by me! Assets were based off those featured in
 
 
 ## Really Useful Resources
+Thanks to my friend for teaching me why its important to step back and look at the bigger picture, and how easy it is to overthink things! ((And for the Math lessons))
 
 [Learning pygame by creating Snake - Clear Code](https://www.youtube.com/watch?v=QFvqStqPCRU&list=LL&index=6)
 
