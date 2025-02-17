@@ -7,15 +7,15 @@ from pygame.math import Vector2
 pygame.init()
 pygame.key.set_repeat()  # No key rollover
 
-cell_size = 60
-grid_size = 17
-screen = pygame.display.set_mode((cell_size * grid_size, cell_size * grid_size))
+CELL_SIZE = 60
+GRID_SIZE = 17
+screen = pygame.display.set_mode((CELL_SIZE * GRID_SIZE, CELL_SIZE * GRID_SIZE))
 clock = pygame.time.Clock()
 
 # Initialize game states and objects
 game_state = "menu"
-menu = Menu(screen, grid_size, cell_size)
-main_game = MAIN(cell_size, grid_size)
+menu = Menu(screen, GRID_SIZE, CELL_SIZE)
+main_game = MAIN(CELL_SIZE, GRID_SIZE)
 SCREEN_UPDATE = pygame.USEREVENT
 pygame.time.set_timer(SCREEN_UPDATE, 150)
 

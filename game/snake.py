@@ -113,4 +113,9 @@ class Snake:
         self.eat_sound.play()
 
     def reset(self):
+        """
+        Called on game end conditions
+        """
         self.body = [Vector2(5, 10), Vector2(4, 10), Vector2(3, 10)]
+
+        #replace with calling the gameover.py contents
