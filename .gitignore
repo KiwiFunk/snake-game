@@ -401,3 +401,7 @@ FodyWeavers.xsd
 
 #User additions
 explain.md
+legacy_game.py
+
+__pycache__/
+*.pyc
