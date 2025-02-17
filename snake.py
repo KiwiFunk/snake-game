@@ -163,7 +163,8 @@ class Fruit:
         self.sprite = self.current_sprite
         
         # Animation settings
-        self.animation_range = 30
+        self.animation_speed = 0.5
+        self.scale_range = 12
         self.growth = 0
         self.growing = True
         
@@ -192,13 +193,13 @@ class Fruit:
     def update(self):
         """Update fruit animation and position"""
         # Update growth direction
-        if self.growth >= self.animation_range:
+        if self.growth >= self.scale_range:
             self.growing = False
         elif self.growth <= 0:
             self.growing = True
             
         # Update size
-        self.growth += 1 if self.growing else -1
+        self.growth += self.animation_speed if self.growing else - self.animation_speed
         
         # Calculate new sprite size with animation
         size_delta = round(self.growth)
