@@ -154,29 +154,79 @@ class Snake:
 
 class Fruit:
     def __init__(self, cell_size):
-        #Vector2(x, y)
+        self.cell_size = cell_size
         self.pos = Vector2(14, 8)
-        self.width = cell_size
-        self.height = cell_size
-        self.watermelon = pygame.transform.smoothscale(pygame.image.load('assets/fruits/watermelon.png').convert_alpha(), (self.width, self.height))
-        self.orange = pygame.transform.smoothscale(pygame.image.load('assets/fruits/orange.png').convert_alpha(), (self.width, self.height))
-        self.strawberry = pygame.transform.smoothscale(pygame.image.load('assets/fruits/strawb.png').convert_alpha(), (self.width, self.height))
-        self.sprites = [self.watermelon, self.orange, self.strawberry]
+        
+        # Load and scale sprites
+        self.sprites = self._load_sprites()
         self.current_sprite = self.sprites[0]
+        self.sprite = self.current_sprite
+        
+        # Animation settings
+        self.animation_range = 30
+        self.growth = 0
+        self.growing = True
+        
+        # Set up initial rect
+        self.rect = self.sprite.get_rect()
+        self.rect.center = (
+            self.pos.x * self.cell_size + self.cell_size // 2,
+            self.pos.y * self.cell_size + self.cell_size // 2
+        )
+
+    def _load_sprites(self):
+        """Helper method to load and scale sprites"""
+        sprite_files = [
+            'assets/fruits/watermelon.png',
+            'assets/fruits/orange.png', 
+            'assets/fruits/strawb.png'
+        ]
+        return [
+            pygame.transform.smoothscale(
+                pygame.image.load(file).convert_alpha(),
+                (self.cell_size, self.cell_size)
+            )
+            for file in sprite_files
+        ]
+
+    def update(self):
+        """Update fruit animation and position"""
+        # Update growth direction
+        if self.growth >= self.animation_range:
+            self.growing = False
+        elif self.growth <= 0:
+            self.growing = True
+            
+        # Update size
+        self.growth += 1 if self.growing else -1
+        
+        # Calculate new sprite size with animation
+        size_delta = round(self.growth)
+        new_size = self.cell_size + size_delta
+        
+        # Scale current sprite
+        self.sprite = pygame.transform.smoothscale(
+            self.current_sprite,
+            (new_size, new_size)
+        )
+        
+        # Update rect while maintaining center position
+        self.rect = self.sprite.get_rect(center=self.rect.center)
 
     def draw_fruit(self):
-        """
-        Create a rectangle object and draw it on the display surface
-        """
-        fruit_rect = pygame.Rect(self.pos.x * self.width, self.pos.y * self.height, self.width, self.height)
-        screen.blit(self.current_sprite, fruit_rect)
+        """Draw the fruit at its grid position"""
+        screen.blit(self.sprite, self.rect)
 
     def new_fruit(self, grid_size):
-        """
-        Move the fruit to a new randomized location within the grid
-        """
+        """Move fruit to new random position and change sprite"""
         self.pos = Vector2(randrange(grid_size), randrange(grid_size))
         self.current_sprite = self.sprites[randrange(len(self.sprites))]
+        
+        # Update rect position for new grid position
+        self.rect.center = (
+            self.pos.x * self.cell_size + self.cell_size // 2,
+            self.pos.y * self.cell_size + self.cell_size // 2
+        )
 
 class MAIN:
     def __init__(self, cell_size, grid_size):
@@ -197,6 +247,7 @@ class MAIN:
     def draw_elements(self):
         self.draw_grass()
         self.fruit.draw_fruit()
+        self.fruit.update()
         self.snake.draw_snake()
         self.draw_score()
 
