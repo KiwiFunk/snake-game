@@ -160,7 +160,8 @@ class Fruit:
         self.height = cell_size
         self.watermelon = pygame.transform.smoothscale(pygame.image.load('assets/fruits/watermelon.png').convert_alpha(), (self.width, self.height))
         self.orange = pygame.transform.smoothscale(pygame.image.load('assets/fruits/orange.png').convert_alpha(), (self.width, self.height))
-        self.sprites = [self.watermelon, self.orange]
+        self.strawberry = pygame.transform.smoothscale(pygame.image.load('assets/fruits/strawb.png').convert_alpha(), (self.width, self.height))
+        self.sprites = [self.watermelon, self.orange, self.strawberry]
         self.current_sprite = self.sprites[0]
 
     def draw_fruit(self):
