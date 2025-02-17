@@ -159,20 +159,23 @@ class Fruit:
         self.width = cell_size
         self.height = cell_size
         self.watermelon = pygame.transform.smoothscale(pygame.image.load('assets/fruits/watermelon.png').convert_alpha(), (self.width, self.height))
-        self.sprite = [self.watermelon]
+        self.orange = pygame.transform.smoothscale(pygame.image.load('assets/fruits/orange.png').convert_alpha(), (self.width, self.height))
+        self.sprites = [self.watermelon, self.orange]
+        self.current_sprite = self.sprites[0]
 
     def draw_fruit(self):
         """
         Create a rectangle object and draw it on the display surface
         """
         fruit_rect = pygame.Rect(self.pos.x * self.width, self.pos.y * self.height, self.width, self.height)
-        screen.blit(self.sprite[randrange(len(self.sprite))], fruit_rect)
+        screen.blit(self.current_sprite, fruit_rect)
 
     def new_fruit(self, grid_size):
         """
         Move the fruit to a new randomized location within the grid
         """
         self.pos = Vector2(randrange(grid_size), randrange(grid_size))
+        self.current_sprite = self.sprites[randrange(len(self.sprites))]
 
 class MAIN:
     def __init__(self, cell_size, grid_size):
