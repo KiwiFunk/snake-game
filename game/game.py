@@ -11,6 +11,9 @@ class MAIN:
         self.grid = grid_size
         self.cell = cell_size
         self.heading_font = pygame.font.Font('assets/fonts/sprint-2.ttf', 30)
+        #Filter inputs so that successive keypresses are not registered until a certain time has passed
+        self.last_key_time = pygame.time.get_ticks()
+        self.key_delay = 50  # 50ms cooldown
 
     def update(self):
         self.snake.move_snake()
@@ -65,12 +68,21 @@ class MAIN:
 
     def handle_input(self, event):
         """Handle keyboard input events"""
+
+        current_time = pygame.time.get_ticks()
+        if current_time - self.last_key_time < self.key_delay:
+            return
+        
         if event.type == pygame.KEYDOWN:
             if event.key in (pygame.K_UP, pygame.K_w):
                 self.snake.change_direction(Vector2(0, -1), 'upkey_sound')
+                self.last_key_time = current_time
             elif event.key in (pygame.K_DOWN, pygame.K_s):
                 self.snake.change_direction(Vector2(0, 1), 'downkey_sound')
+                self.last_key_time = current_time
             elif event.key in (pygame.K_LEFT, pygame.K_a):
                 self.snake.change_direction(Vector2(-1, 0), 'leftkey_sound')
+                self.last_key_time = current_time
             elif event.key in (pygame.K_RIGHT, pygame.K_d):
                 self.snake.change_direction(Vector2(1, 0), 'rightkey_sound')
+                self.last_key_time = current_time

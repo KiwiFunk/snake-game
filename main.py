@@ -5,6 +5,7 @@ from menus.menu import Menu
 from pygame.math import Vector2
 
 pygame.init()
+pygame.key.set_repeat()  # No key rollover
 
 cell_size = 60
 grid_size = 17
