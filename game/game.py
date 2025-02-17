@@ -2,6 +2,7 @@ import pygame
 import sys
 from game.snake import Snake
 from game.fruit import Fruit
+from pygame.math import Vector2
 
 class MAIN:
     def __init__(self, cell_size, grid_size):
@@ -61,3 +62,15 @@ class MAIN:
             screen.blit(outline_surface, outline_rect.move(offset))
         score_rect = score_surface.get_rect(center = score_xy)
         screen.blit(score_surface, score_rect)
+
+    def handle_input(self, event):
+        """Handle keyboard input events"""
+        if event.type == pygame.KEYDOWN:
+            if event.key in (pygame.K_UP, pygame.K_w):
+                self.snake.change_direction(Vector2(0, -1), 'upkey_sound')
+            elif event.key in (pygame.K_DOWN, pygame.K_s):
+                self.snake.change_direction(Vector2(0, 1), 'downkey_sound')
+            elif event.key in (pygame.K_LEFT, pygame.K_a):
+                self.snake.change_direction(Vector2(-1, 0), 'leftkey_sound')
+            elif event.key in (pygame.K_RIGHT, pygame.K_d):
+                self.snake.change_direction(Vector2(1, 0), 'rightkey_sound')

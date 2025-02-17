@@ -24,14 +24,7 @@ while True:
             main_game.update()
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP or event.key == pygame.K_w:
-                main_game.snake.change_direction(Vector2(0, -1), 'upkey_sound')
-            elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                main_game.snake.change_direction(Vector2(0, 1), 'downkey_sound')
-            elif event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                main_game.snake.change_direction(Vector2(-1, 0), 'leftkey_sound')
-            elif event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                main_game.snake.change_direction(Vector2(1, 0), 'rightkey_sound')
+            main_game.handle_input(event)
 
     screen.fill((160, 100, 140))
     main_game.draw_elements(screen)
