@@ -13,7 +13,7 @@ class MAIN:
         self.heading_font = pygame.font.Font('assets/fonts/sprint-2.ttf', 30)
         #Filter inputs so that successive keypresses are not registered until a certain time has passed
         self.last_key_time = pygame.time.get_ticks()
-        self.key_delay = 50  # 50ms cooldown
+        self.key_delay = 100  # 100ms cooldown
 
     def update(self):
         self.snake.move_snake()
